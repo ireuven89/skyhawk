@@ -35,14 +35,15 @@ To install the project, follow these steps:
     ```bash
     git clone https://github.com/ireuven89/skyhawk.git
     ```
-
-2. Navigate to the project directory:
-
-    ```bash
+2. If running on local :
    if running on local
-   set 2 envs 
+   set 2 envs
    MYSQL_ROOT_PASSWORD
    MYSQL_HOST
+   REDIS_HOST
+
+    navigate to the project directory
+    ```bash
     cd skyhawk/backend
     run go build .
     run /.backend
@@ -52,18 +53,19 @@ To install the project, follow these steps:
 3. If using Docker,run the docker compose command:
 
     ```bash
+   cd skyhawk
    run docker compose --env-file app.env up -d app
     ```
 
 ## Usage
 
-The project serves 5 main APIs
-1. log game stats post - POST /api/v1/games/log
-    example is:
+The project serves 4 main APIs
+  1. log game stats post - POST /api/v1/games/log
+    example request is:
       
          \\json
                {     
-         "id": "game-stats-001",
+         "id": "Warriors vs lakers", - can be empty
          "date": "2025-03-08T19:30:00Z",
          "teams": [
                {
@@ -100,7 +102,15 @@ The project serves 5 main APIs
                }
          ]
          }
-2.  fetch player stats (per game) GET players/:game_id/:player_id
-3.  fetch player season stats GET players/season/:player_id
-4. fetch team stats GET /teams/stats/:team_id/:game_id
-5. fetch team season stats GET /teams/stats/season/:team_id
+  2. fetch player season stats GET players/season/:player_id
+  3. fetch team season stats GET /teams/stats/season/:team_id
+  4. fetch game stats GET /games/:game_id
+     returns all the player stats of a game
+
+  5. Deployment on AWS:
+  open an ecr with the project name
+  install aws cli on your local machine
+  build the image docker build -t skyhawk .
+  tag the image with the image name and aws id
+  push the image to the remote registry 
+   

@@ -1,7 +1,8 @@
 -- +goose up
 CREATE TABLE IF NOT EXISTS teams (
                                      id VARCHAR(36) PRIMARY KEY,
-                                     name VARCHAR(100) NOT NULL
+                                     name VARCHAR(100) NOT NULL,
+                                     CONSTRAINT unique_team_name UNIQUE (name)
 );
 
 -- Players table
@@ -9,7 +10,8 @@ CREATE TABLE IF NOT EXISTS players (
                                        id VARCHAR(36) PRIMARY KEY,
                                        name VARCHAR(100) NOT NULL,
                                        team_id VARCHAR(36) NOT NULL,
-                                       FOREIGN KEY (team_id) REFERENCES teams(id)
+                                       FOREIGN KEY (team_id) REFERENCES teams(id),
+                                       CONSTRAINT unique_player_name_team_id UNIQUE (name, team_id)
 );
 
 -- Game stats table
@@ -17,7 +19,7 @@ CREATE TABLE IF NOT EXISTS game_stats (
                                           id varchar(36) PRIMARY KEY,
                                           game_id VARCHAR(36) NOT NULL,
                                           player_id VARCHAR(36) NOT NULL,
-                                          date DATETIME NOT NULL,
+                                          date timestamp NOT NULL default current_timestamp,
                                           points INT NOT NULL,
                                           rebounds INT NOT NULL,
                                           assists INT NOT NULL,

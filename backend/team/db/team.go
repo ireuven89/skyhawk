@@ -1,20 +1,20 @@
 package db
 
 type Team struct {
-	ID   string `goose:"id"`
-	Name string `goose:"name"`
+	ID   string `db:"id"`
+	Name string `db:"name"`
 }
 
 type SeasonStats struct {
-	TeamID           string  `json:"team_id" goose:"team_id"`
-	TeamName         string  `json:"team_name" goose:"team_name"`
-	GamesPlayed      int     `json:"games_played" goose:"games_played"`
-	AvgPoints        float64 `json:"avg_points" goose:"avg_points"`
-	AvgRebounds      float64 `json:"avg_rebounds" goose:"avg_rebounds"`
-	AvgAssists       float64 `json:"avg_assists" goose:"avg_assists"`
-	AvgSteals        float64 `json:"avg_steals" goose:"avg_steals"`
-	AvgBlocks        float64 `json:"avg_blocks" goose:"avg_blocks"`
-	AvgFouls         float64 `json:"avg_fouls" goose:"avg_fouls"`
-	AvgTurnovers     float64 `json:"avg_turnovers" goose:"avg_turnovers"`
-	AvgMinutesPlayed float64 `json:"avg_minutes_played" goose:"avg_minutes_played"`
+	TeamID           string  `db:"team_id"`
+	TeamName         string  `db:"team_name"`
+	GamesPlayed      int     `db:"games_played"`
+	AvgPoints        float64 `db:"avg_points"`
+	AvgRebounds      float64 `db:"avg_rebounds"`
+	AvgAssists       float64 `db:"avg_assists"`
+	AvgSteals        float64 `db:"avg_steals"`
+	AvgBlocks        float64 `db:"avg_blocks"`
+	AvgFouls         float64 `db:"avg_fouls"`
+	AvgTurnovers     float64 `db:"avg_turnovers"`
+	AvgMinutesPlayed float64 `db:"avg_minutes_played"`
 }

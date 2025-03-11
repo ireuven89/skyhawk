@@ -8,13 +8,17 @@ services:
     environment:
       - SQL_USER=${SQL_USER}
       - SQL_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - REDIS_HOST=${REDIS_HOST}
     depends_on:
       db:
+        condition: service_healthy
+      redis:
         condition: service_healthy
     env_file:
       - app.env
   db:
     image: mysql:latest
+    command: [ "--max_connections=10000" ]
     healthcheck:
       test: mysqladmin ping -h 127.0.0.1 -u root --password=${MYSQL_ROOT_PASSWORD}
       start_period: 10s
@@ -27,3 +31,16 @@ services:
       - MYSQL_DATABASE=games_db
     volumes:
         - /var/lib/mysql
+  redis:
+    image: redis:bookworm
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - /var/lib/redis
+    healthcheck:
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+      interval: 10s
+      timeout: 1m
+      retries: 3
+      start_period: 5s

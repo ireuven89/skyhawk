@@ -17,7 +17,7 @@ type PlayerStatsDB struct {
 	MinutesPlayed float64   `db:"minutes_played"`
 }
 
-type Player struct {
+type PlayerDB struct {
 	ID   string `db:"id"`
 	Name string `db:"name"`
 	Team string `db:"team_id"`

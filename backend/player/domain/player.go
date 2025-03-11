@@ -7,17 +7,17 @@ type Player struct {
 }
 
 type PlayerSeasonStats struct {
-	PlayerID         string
-	PlayerName       string
-	TeamID           string
-	TeamName         string
-	GamesPlayed      int
-	AvgPoints        float64
-	AvgRebounds      float64
-	AvgAssists       float64
-	AvgSteals        float64
-	AvgBlocks        float64
-	AvgFouls         float64
-	AvgTurnovers     float64
-	AvgMinutesPlayed float64
+	PlayerID         string  `json:"player_id"`
+	PlayerName       string  `json:"player_name"`
+	TeamID           string  `json:"team_id"`
+	TeamName         string  `json:"team_name"`
+	GamesPlayed      int     `json:"games_played"`
+	AvgPoints        float64 `json:"avg_points"`
+	AvgRebounds      float64 `json:"avg_rebounds"`
+	AvgAssists       float64 `json:"avg_assists"`
+	AvgSteals        float64 `json:"avg_steals"`
+	AvgBlocks        float64 `json:"avg_blocks"`
+	AvgFouls         float64 `json:"avg_fouls"`
+	AvgTurnovers     float64 `json:"avg_turnovers"`
+	AvgMinutesPlayed float64 `json:"avg_minutes_played"`
 }

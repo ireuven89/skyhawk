@@ -19,8 +19,8 @@ func NewHandler(useCase *usecase.UseCase, logger *zap.Logger) *Handler {
 	return &Handler{useCase: useCase, logger: logger}
 }
 
-func (h *Handler) GameStatsHandler(c echo.Context) error {
-	var req domain.GameStats
+func (h *Handler) GameLogHandler(c echo.Context) error {
+	var req domain.GameStatsReq
 
 	if err := c.Bind(&req); err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
@@ -39,7 +39,7 @@ func (h *Handler) GameStatsHandler(c echo.Context) error {
 func (h *Handler) TeamSeasonStatsHandler(c echo.Context) error {
 	id := c.Param("id")
 
-	stats, err := h.useCase.FindTeam(id)
+	stats, err := h.useCase.GetTeamSeasonStats(id)
 
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
@@ -48,52 +48,28 @@ func (h *Handler) TeamSeasonStatsHandler(c echo.Context) error {
 	return c.JSON(http.StatusOK, stats)
 }
 
-func (h *Handler) TeamStatsStatsHandler(c echo.Context) error {
-	var req domain.GameStats
+func (h *Handler) GameStatsHandler(c echo.Context) error {
+	id := c.Param("id")
 
-	if err := c.Bind(&req); err != nil {
-		return c.JSON(http.StatusBadRequest, err.Error())
-	}
-
-	id, err := h.useCase.LogGame(req)
+	res, err := h.useCase.GetGameStats(id)
 
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 
 	}
 
-	return c.JSON(http.StatusOK, map[string]interface{}{"id": id})
+	return c.JSON(http.StatusOK, res)
 }
 
-func (h *Handler) PlayerStatsHandler(c echo.Context) error {
-	var req domain.GameStats
-
-	if err := c.Bind(&req); err != nil {
-		return c.JSON(http.StatusBadRequest, err.Error())
-	}
-
-	id, err := h.useCase.LogGame(req)
-
-	if err != nil {
-		return c.JSON(http.StatusInternalServerError, err.Error())
-
-	}
-
-	return c.JSON(http.StatusOK, map[string]interface{}{"id": id})
-}
 func (h *Handler) PlayerSeasonStatsHandler(c echo.Context) error {
-	var req domain.GameStats
+	playerId := c.Param("player_id")
 
-	if err := c.Bind(&req); err != nil {
-		return c.JSON(http.StatusBadRequest, err.Error())
-	}
-
-	id, err := h.useCase.LogGame(req)
+	result, err := h.useCase.GetPlayerSeasonStats(playerId)
 
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 
 	}
 
-	return c.JSON(http.StatusOK, map[string]interface{}{"id": id})
+	return c.JSON(http.StatusOK, result)
 }
